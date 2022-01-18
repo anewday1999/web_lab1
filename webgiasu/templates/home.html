@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Trang chủ{% endblock title %}
+
+{% block content %}
+    <script>
+        function CBR_XML_Daily_Ru(rates) {
+        function trend(current, previous) {
+            if (current > previous) return ' ▲';
+            if (current < previous) return ' ▼';
+            return '';
+        }
+            
+        var USDrate = rates.Valute.USD.Value.toFixed(4).replace('.', ',');
+        var USD = document.getElementById('USD');
+        USD.innerHTML = USD.innerHTML.replace('00,0000', USDrate);
+        var _trendusd = trend(rates.Valute.USD.Value, rates.Valute.USD.Previous);
+        USD.innerHTML += _trendusd;
+        if (_trendusd == ' ▲'){
+            $("#USD").css('color', '#00ff00');
+        }
+        else if (_trendusd == ' ▼'){
+            $("#USD").css('color', '#ff3300');
+        }
+
+        var EURrate = rates.Valute.EUR.Value.toFixed(4).replace('.', ',');
+        var EUR = document.getElementById('EUR');
+        EUR.innerHTML = EUR.innerHTML.replace('00,0000', EURrate);
+        var _trendeur = trend(rates.Valute.EUR.Value, rates.Valute.EUR.Previous);
+        EUR.innerHTML += _trendeur;
+        if (_trendeur == ' ▲'){
+            $("#EUR").css('color', '#00ff00');
+        }
+        else if (_trendeur == ' ▼'){
+            $("#EUR").css('color', '#ff3300');
+        }
+        }
+    </script>
+    <link rel="dns-prefetch" href="https://www.cbr-xml-daily.ru/" />
+    <script src="//www.cbr-xml-daily.ru/daily_jsonp.js" async></script>
+
+    <div class="container align-middle rounded-3 border border-2 border-secondary ct-home" id = "bg" style = "background-image: url('{% static 'moscowcitynightd.png' %}');min-height:700px;">
+        <div class="mt-2">
+            <div id="USD">Доллар США $ — 00,0000 руб.</div>
+            <div id="EUR">Евро € — 00,0000 руб.</div>
+            <h1 class="caption1" >WELCOM TO TMVIETNGA.COM</h1>
+            <h3 class="mb-5 caption1">Social netword for Vietnamese in Russian.</h3>
+            <h3 class="mb-5 caption1">Choose what you want.</h3>
+            <h5 class="mb-3 caption1">Start with:</h3>
+            <div class="button-start justify-content-center" style="flex-direction: column;display: grid;">
+                <div>
+                    <a href="{% url 'market' %}" class=" btn btn-success btn-lg border border-3 border-light" style = "opacity: 85%;max-width:150;">Market</a>
+                    <a href="{% url 'findtutor' %}" class="ms-2 btn btn-light btn-lg border border-3 border-light" style = "opacity: 85%;max-width:150;">Find tutor</a>
+                </div>
+                <br>
+                <div>
+                    <a href="{% url 'employee' %}" class=" btn btn-warning btn-lg border border-3 border-light" style = "opacity: 85%;max-width:150;">Employee</a>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    
+    <!--<div class="container video-list bg-light rounded-3 border border-2 border-secondary mt-5">
+        <h1 class="mb-5">Video bài học lập trình:</h1>
+        
+        {% for item in object_list %}
+        <div class="d-flex mb-5">
+        <div class="flex-shrink-0">
+            <a href="">
+                <img src="{{item.picture.url}}" alt="" width="240">
+            </a>
+        </div>
+        <div class="flex-grow-1 ms-3">
+        <h5 class="mt-0">
+            <a href="">{{ item.name }}</a>
+        </h5>
+
+        <ul>
+            <li>Master: <a href="">{{ item.master_name }}</a></li>
+            <li>Số bài học: {{ item.num_lession }}.</li>
+        </ul>
+
+        {{item.description}}
+        </div>
+        </div>
+        {% endfor %}
+    </div>-->
+    <script></script>
+{% endblock content %}
+
+

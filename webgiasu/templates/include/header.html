@@ -1,0 +1,79 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" style = "position:center;">
+            <img class="rounded-3 border border-2 border-light" src="{% static 'logo.png' %}" width="80" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link {% if nav == 'home' %}
+            active
+            {% endif %}" aria-current="page" href="/">Homepage</a>
+            </li>
+
+            <li class="nav-item border-start border-success">
+            <a class="nav-link {% if nav == 'market' %}
+            active
+            {% endif %}" href="{% url 'market' %}">Market</a>
+            
+            <li class="nav-item border-start border-success">
+            <a class="nav-link {% if nav == 'findtutor' %}
+            active
+            {% endif %}" href="{% url 'findtutor' %}">Tutor</a>
+
+            <li class="nav-item border-start border-success">
+            <a class="nav-link {% if nav == 'employee' %}
+            active
+            {% endif %}" href="{% url 'employee' %}">Employee</a>
+
+
+            <li class="nav-item border-start border-success">
+            <a class="nav-link {% if nav == 'about' %}
+            active
+            {% endif %}" href="{% url 'about' %}">About</a>
+
+            </li>
+        </ul>
+        <form class="d-flex">
+            <!--
+            <input class="form-control me-2" type="search" placeholder="Từ khoá ..." aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Tìm</button>
+            -->
+        </form>
+        {% if not user.is_authenticated %}
+            <ul class="navbar-nav ms-3">
+                <li class="nav-item">
+                <a class="nav-link {% if nav == 'login' %}
+                active
+                {% endif %}" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link {% if nav == 'register' %}
+                active
+                {% endif %}" href="/register">Register</a>
+                </li>
+            </ul>
+        {% else %}
+            <ul class="navbar-nav ms-5">
+
+                <li class="nav-item me-5">
+                <a class="nav-link btn-link {% if nav == 'profile' %}
+                active
+                {% endif %}" href="/profile">Profile{{ user.username }}</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link btn-link" href="{% url 'logout_ok' %}">
+                    Logout
+                    </a>
+                </li>
+
+            </ul>
+        {% endif %}
+        </div>
+    </div>
+    </nav>

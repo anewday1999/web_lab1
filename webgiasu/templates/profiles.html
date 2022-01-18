@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Profile{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+    <div class="container border border-2 justify-content-center align-items-center" style="margin-top:70px;background-color:#edf0f2;">
+        <h1>Profile:</h1>
+        <div>
+            {% if messages %}
+                <p class="ms-2" style="color:#00b33c;">{% for mess in messages %}{{mess}}{% endfor %}</p>
+            {% endif %}
+        </div>
+        <div class="content-section rounded-3 border border-2 border-success mb-2" style="background-color:#FFFDF6;max-width:500px;">
+            <div class="media d-flex flex-row">
+                {% if user.avatar.url != '' %}
+                    <img class="avatar border border-2 mt-1 mb-1 ms-1" src="{{ user.avatar.url }}" style="max-width:120px; max-height:120px;">
+                {% endif %}
+                
+                <div class="media-body ms-4 mt-4">
+                    <h4 class="account-heading">Hello <strong>{{ user.username }}</strong></h4>
+                    <p class="text-secondary">Email: {{ user.email }}</p>
+                    {% if not user.is_verified %}
+                    <p style = "color:#e60000;">Not active.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <p class="ms-2 text-secondary">➤ Last login: {{ user.last_login }}</p>
+        <p class="ms-2 text-secondary">✓ Date registraion: {{ user.date_joined }}</p>
+
+        <form method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{ p_form|crispy }}
+            <p><button class = "btn mt-3" type="submit" style="background-color:#00b33c;color:#ffffff;">Save</button></p>
+        </form>
+        <br>
+        <hr class="dashed mt-4 mb-5">
+        <div class = "d-flex justify-content-center">
+            <a href="{% url 'market' %}" class="ms-2 btn btn-success btn-lg border border-3 border-light" style = "opacity: 85%;">Market</a>
+            <a href="{% url 'findtutor' %}" class="ms-2 btn btn-light btn-lg border border-3 border-light" style = "opacity: 85%;">Tutor</a>
+            <a href="{% url 'employee' %}" class="ms-2 me-2 btn btn-warning btn-lg border border-3 border-light" style = "opacity: 85%;">Emoloyee</a>
+        </div>
+    </div>
+
+{% endblock content %}

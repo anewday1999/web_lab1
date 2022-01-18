@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Trang chủ{% endblock title %}
+
+{% block content %}
+    <div class="container video-list bg-light rounded-3 border border-2 border-secondary mt-5">
+        <h1 class="mb-1 border-bottom border-3" style="">Findtutor:</h1>
+        <p class=" d-flex flex-row-reverse"><button class = "btn mt-3 mb-1" type="submit" style="background-color:#cc0000;color:#ffffff;">Đăng tin <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M1 2.5A2.5 2.5 0 013.5 0h8.75a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V1.5h-8a1 1 0 00-1 1v6.708A2.492 2.492 0 013.5 9h3.25a.75.75 0 010 1.5H3.5a1 1 0 100 2h5.75a.75.75 0 010 1.5H3.5A2.5 2.5 0 011 11.5v-9zm13.23 7.79a.75.75 0 001.06-1.06l-2.505-2.505a.75.75 0 00-1.06 0L9.22 9.229a.75.75 0 001.06 1.061l1.225-1.224v6.184a.75.75 0 001.5 0V9.066l1.224 1.224z"></path></svg></button></p>
+        
+        {% for item in '1234' %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <img class="rounded-circle border border-2 account-img ms-4" src="{% static 'avatarsts.png' %}" style="max-width:120px; max-height:120px;">
+                    <p class="ms-1 col align-self-center">Nguyen Thanh Thien</p>
+                </div>
+                <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title border-bottom border-2">Cần tìm gia sư tin học cho bé 13 tuổi.</h5>
+                    <p class="card-text">Nhà có cháu bé trai 13 tuổi, nói tiếng việt không sỏi lắm, cần tìm một bạn gia sư có thể theo kèm môn tin học.</p>
+                    <ul>
+                        <li>
+                            <p class="card-text">Môn học: Tin học cơ bản.</p>
+                        </li>
+                        <li>
+                            <p class="card-text">Số buổi yêu cầu: 2/tuần.</p>
+                        </li>
+                        <li>
+                            <p class="card-text">Lương dự kiến: 2000rup / buổi.</p>
+                        </li>
+                        <li>
+                            <div class="d-flex flex-row">
+                                <p class="card-text">Liên hệ: </p>
+                                <p><small class="text-muted">Thông tin liên hệ đã được ẩn đi để tránh làm phiền khách hàng.</small></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="card-text"><small class="text-muted">Đăng ngày: 01/08/2021      -      Hết hạn  : 30/08/2021</small></p>
+                    <p><button class = "btn mt-3" type="submit" style="background-color:#00b33c;color:#ffffff;">Xem liên hệ</button></p>
+                    <p><small class="text-muted"><a href="/about">Báo cáo tin giả.</a></small></p>
+                </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+

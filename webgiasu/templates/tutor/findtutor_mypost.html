@@ -1,0 +1,878 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your post{% endblock title %}
+
+{% block content %}
+    <div class="container video-list bg-light rounded-3 border border-2 border-secondary mt-5">
+        <h1 class="mb-1 border-bottom border-3" style="">Your findtutor post:</h1>
+        
+        <div class = "row">
+            <div class="col">
+                <p class=""><button class = "btn mt-3 mb-1" {% if user.is_authenticated %} data-bs-toggle="modal" data-bs-target="#uploadPost" {% else %} id = "postpost-btn" {% endif %} style="background-color:#cc0000;color:#ffffff;">Post <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M1 2.5A2.5 2.5 0 013.5 0h8.75a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V1.5h-8a1 1 0 00-1 1v6.708A2.492 2.492 0 013.5 9h3.25a.75.75 0 010 1.5H3.5a1 1 0 100 2h5.75a.75.75 0 010 1.5H3.5A2.5 2.5 0 011 11.5v-9zm13.23 7.79a.75.75 0 001.06-1.06l-2.505-2.505a.75.75 0 00-1.06 0L9.22 9.229a.75.75 0 001.06 1.061l1.225-1.224v6.184a.75.75 0 001.5 0V9.066l1.224 1.224z"></path></svg></button></p>
+            </div>
+
+            <div class="col d-flex justify-content-end">
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+                {% if user.is_sub_findtutor %}
+                    <p class="">
+                    <button class = "btn mt-3 mb-1 btn-notice" id = "btn-notice-id" style="background-color:#737373;color:#ffffff;">
+                        <i class="fas fa-bell fa-spin" style="font-size:20px"></i>
+                        Turn off
+                    </button>
+                    </p>
+                {% else %}
+                    <p class="">
+                    <button class = "btn mt-3 mb-1 btn-notice" id = "btn-notice-id" style="background-color:#ffcc00;color:#ffffff;">
+                        <i class="fas fa-bell fa-spin" style="font-size:20px"></i>
+                        Follow
+                    </button>
+                    </p>
+                {% endif %}
+                
+            </div>
+        {% if user.is_authenticated %}
+        <div class="">
+            <a href="/findtutor" style="color:#808080;">
+                <p class="text-muted">&#8592; Back.</p>
+            </a>
+        </div>
+        {% endif %}
+        </div>
+        <!--Info Modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header" style="background: rgba(0,0,0,0.8);">
+                <h5 class="modal-title" style = "color:#ffffff;" id="infoModalLabel" style="#717981"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="flex-row">
+                    <p style="margin: 0; display: inline;" id="iconschool">&#9755;</p>
+                    <p style="margin: 0; display: inline;" id="school"></p>
+                </div>
+                <hr class="solid">
+                <div class="flex-row">
+                    <p style="margin: 0; display: inline;" id="iconspecialize">&#9755;</p>
+                    <p style="margin: 0; display: inline;" id="specialize"></p>
+                </div>
+                <hr class="solid">
+                <div class="flex-row">
+                    <p style="margin: 0; display: inline;" id="iconyearofschool">&#9755;</p>
+                    <p style="margin: 0; display: inline;" id="yearofschool"></p>
+                </div>
+                <hr class="solid">
+                <div class="flex-row">
+                    <p style="margin: 0; display: inline;" id="iconsexs">&#9755;</p>
+                    <p style="margin: 0; display: inline;" id="sexs"></p>
+                </div>
+                <hr class="solid">
+                <div class="flex-row">
+                    <p style="margin: 0; display: inline;" id="iconyears_of_birth">&#9755;</p>
+                    <p style="margin: 0; display: inline;" id="years_of_birth"></p>
+                </div>
+                <hr class="solid">
+                <div class="flex-row">
+                    <p style="margin: 0; display: inline;" id="iconmore">&#9755;</p>
+                    <p style="margin: 0; display: inline;" id="more"></p>
+                </div>
+                <hr class="solid">
+                <i><p class="ms-2 text-secondary" style="font-size: 15px;text-align: center;" id="last_login"></p></i>
+
+            </div>
+            <div class="modal-footer">
+                <a id="modal-footer-info-login-button" href="{% url 'login' %}"><button type="button" class="btn" style="background-color:#10B33C;color:#ffffff;">Login</button></a>
+                <button type="button" class="btn" style="background-color:#CC0000;color:#ffffff;" data-bs-dismiss="modal">close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Notifications Modal -->
+        <div class="modal fade" id="notificationmodal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header" style="background: rgba(0,0,0,0.8);">
+                <h5 class="modal-title" style = "color:#ffffff;" id="notifModalLabel" style="#717981"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <a id="modal-footer-notif-login-button" href="{% url 'login' %}"><button type="button" class="btn" style="background-color:#10B33C;color:#ffffff;">Login</button></a>
+                <button type="button" class="btn" style="background-color:#CC0000;color:#ffffff;" data-bs-dismiss="modal">close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Display Image Modal -->
+        <div class="modal fade" id="displayimagemodal" tabindex="-1" aria-labelledby="displayimageModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header" style="background: rgba(166, 166, 166,0.8);">
+                <h5 class="modal-title" style = "color:#ffffff;" id="displayimageModalLabel" style="#717981"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img class = "imageinmodal" src="" id = "displayimageBody">
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Up post modal -->
+        <div class="modal fade" id="uploadPost" tabindex="-1" aria-labelledby="uploadPostLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header" style="background: rgba(0,0,0,0.8);">
+                <h5 class="modal-title" style = "color:#ffffff;" id="uploadPostLabel">Post find tutuor.</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label><small class="">Title (<30 chars):</small></label>
+                    <input maxlength="30" type="text" name="title" id = "titleid" class="form-control" placeholder="Require">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label><small class="">Content (<200 chars):</small></label>
+                    <input maxlength="200" type="text" name="main_content" id = "main_contentid" class="form-control" placeholder="Require">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label><small class="">Subject (<30 chars):</small></label>
+                    <input maxlength="30" type="text" name="subject" id = "subjectid" class="form-control" placeholder="Require">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label><small class="">Calendar (<30 chars):</small></label>
+                    <input maxlength="30" type="text" name="calendar" id = "calendarid" class="form-control" placeholder="Require">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label><small class="">Salary (<30 chars):</small></label>
+                    <input maxlength="30" type="text" name="salary" id = "salaryid" class="form-control" placeholder="Require">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label><small class="">Contact (<100 chars):</small></label>
+                    <input maxlength="100" type="text" name="contact" id = "contactid" class="form-control" placeholder="Require">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label><small class="">Expire on (days):*</small></label>
+                    <select name="date_outdate" id="date_outdateid" class="form-control">
+                        <option>7</option>
+                        <option>15</option>
+                        <option>30</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                <label><small class="">Add imgage (<3MB/file):</label></small>
+                    <br>
+                    <input type="file" name="post_img1" id = "post_img1id" accept="image/*" class="form-control">
+                    <br>
+                    <input type="file" name="post_img2" id = "post_img2id" accept="image/*" class="form-control">
+                    <br>
+                    <input type="file" name="post_img3" id = "post_img3id" accept="image/*" class="form-control">
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-post-findtutor" style="background-color:#00b33c;color:#ffffff;">Post</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-end">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm">
+                <li class="page-item">
+                    {% if postsFindTutor.number != 1 %}
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo; ...</span>
+                        </a>
+                    {% endif %}
+                </li>
+                
+                {% if postsFindTutor.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" id = "top-page-btn-1" href="?page={{postsFindTutor.previous_page_number}}"></a>
+                    </li>
+                {% endif %}
+
+                <script>
+                    {% if postsFindTutor.has_previous %}
+                        $(document).ready(function() {
+                            $("#top-page-btn-1").html({{postsFindTutor.number}}-1)
+                        })
+                    {% endif %}
+                </script>
+
+                <li class="page-item active" >
+                    <a class="page-link" id = "top-page-btn-2" href="?page={{postsFindTutor.number}}">{{postsFindTutor.number}}</a>
+                </li>
+
+                {% if postsFindTutor.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" id = "top-page-btn-3" href="?page={{postsFindTutor.next_page_number}}"></a>
+                    </li>
+                {% endif %}
+
+                <script>
+                    {% if postsFindTutor.has_next %}
+                        $(document).ready(function() {
+                            $("#top-page-btn-3").html({{postsFindTutor.number}}+1)
+                        })
+                    {% endif %}
+                </script>
+
+                <li class="page-item">
+                    {% if postsFindTutor.number != pages %}
+                        <a class="page-link" href="?page={{pages}}" aria-label="Last">
+                            <span aria-hidden="true">... &raquo;</span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        </div>
+        <!-- Pagination -->
+
+        <!-- LIST -->
+        {% for post in postsFindTutor %}
+        <div class="card mb-3 border border-success border-2 card-post" value="{{ post.author.id }}">
+            <div class="row g-0" style = "background-color:rgba(245, 251, 244, 0.77);">
+                {% if post.is_expired %}
+                    <p class="ms-2 mt-2" style = "color:#990000;font-size:16px;">Expired.</p>
+                {% endif %}
+                <div class="col-md-2">
+                    <img href="" class="avatar border border-2 center" src="{{ post.author.avatar.url }}" style="max-width:120px; max-height:120px;">
+                    <a href="" class="center link-display-user-info" id="{{ post.author.id }}" style = "text-align: center; color:#2958CA;" data-bs-toggle="modal" data-bs-target="#infoModal">{{ post.author.username }}</a>
+                    <p class= "" style="text-align: center;"><small class="text-muted">Joined: {{post.author.date_joined|date:"d/m/Y"}}</small></p>
+                    
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body col">
+                        <div class="row">
+                            <h5 id = "title{{post.id}}" class="card-title border-bottom border-2">{{ post.title }}</h5>
+                            <p id = "main_content{{post.id}}" class="card-text">{{post.main_content}}</p>
+                            <ul class="ms-2">
+                                <li class="mb-2">
+                                    <div class="card-text d-flex flex-row">
+                                        <div class="p-2">Subject:</div>
+                                        <div class="p-2" id = "subject{{post.id}}">{{post.subject}}</div>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <div class="card-text d-flex flex-row">
+                                        <div class="p-2">Calendar: </div>
+                                        <div class="p-2" id = "calendar{{post.id}}">{{post.calendar}}</div>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <div class="card-text d-flex flex-row">
+                                        <div class="p-2">Salary:  </div>
+                                        <div class="p-2" id = "salary{{post.id}}">{{post.salary}}</div>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <div class="card-text d-flex flex-row">
+                                        <p class="p-2">Contact: </p>
+                                        <p class="p-2" id = "contact{{post.id}}">{{post.contact}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p class="card-text"><small class="text-muted">Posted: {{post.date_posted|date:"G:i, d/m/Y"}}</small></p>
+                            <p class="card-text"><small class="text-muted">Expired after : {{post.date_outdate}} days</small></p>
+                        </div>
+                        
+                        <div class="col border border-2">
+                            {% if post.post_img1 %}
+                                <a class ="me-4 img-click-display" data-bs-toggle="modal" data-bs-target="#displayimagemodal" href="">
+                                    <img class = "m-2 border border-3 imgpost" id ="{{ post.post_img1.url }}" src="{{ post.post_img1.url }}" alt="">
+                                </a>
+                            {% endif %}
+                            {% if post.post_img2 %}
+                                <a class ="me-4 img-click-display" data-bs-toggle="modal" data-bs-target="#displayimagemodal" href="">
+                                    <img class = "m-2 border border-3 imgpost" id ="{{ post.post_img2.url }}" src="{{ post.post_img2.url }}" alt="">
+                                </a>
+                            {% endif %}
+                            {% if post.post_img3 %}
+                                <a class="img-click-display" data-bs-toggle="modal" data-bs-target="#displayimagemodal" href="">
+                                    <img class = "m-2 border border-3 imgpost" id ="{{ post.post_img3.url }}" src="{{ post.post_img3.url }}" alt="">
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="mt-2 d-flex justify-content-start">
+                            <div class="">
+                                <p class = "text-muted" id = "num_reports_display{{post.id}}" >{{post.num_report}} reports</p>
+                                <script>
+                                    {% for rp in post.report.all %}
+                                        {% if rp == user  %}
+                                            $(document).ready(function() {
+                                                let rbi = "#reportbtn{{post.id}}"
+                                                $(rbi).html("Unreport")
+                                                $(rbi).css("background-color", "#009900")
+                                            })
+                                        {% endif %}
+                                    {% endfor %}
+                                </script>
+                            </div>
+                        </div>
+
+                        {% if post.author == user %}
+                            <div class="mt-2 d-flex justify-content-end">
+
+                                <a class = "save-post" id = "save{{ post.id }}"  style="color:#00cc00;display:none;" href="javascript:save({{ post.id }})" >
+                                    &#10003; Save
+                                </a>
+
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                
+                                <a class = "edit-post" value = "{{ post.id }}"  style="color:#737373;" href="javascript:editpost({{ post.id }})" >
+                                    &#9998; Edit
+                                </a>
+
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+                                <a class = "delete-post" value = "{{ post.id }}" style="color:#737373;" href="javascript:deletepost({{ post.id }})">
+                                    <i class="far fa-trash-alt"></i> Delete post
+                                </a>
+
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-end">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm">
+                <li class="page-item">
+                    {% if postsFindTutor.number != 1 %}
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo; ...</span>
+                        </a>
+                    {% endif %}
+                </li>
+                
+                {% if postsFindTutor.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" id = "bottom-page-btn-1" href="?page={{postsFindTutor.previous_page_number}}"></a>
+                    </li>
+                {% endif %}
+
+                <script>
+                    {% if postsFindTutor.has_previous %}
+                        $(document).ready(function() {
+                            $("#bottom-page-btn-1").html({{postsFindTutor.number}}-1)
+                        })
+                    {% endif %}
+                </script>
+
+                <li class="page-item active" >
+                    <a class="page-link" id = "bottom-page-btn-2" href="?page={{postsFindTutor.number}}">{{postsFindTutor.number}}</a>
+                </li>
+
+                {% if postsFindTutor.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" id = "bottom-page-btn-3" href="?page={{postsFindTutor.next_page_number}}"></a>
+                    </li>
+                {% endif %}
+
+                <script>
+                    {% if postsFindTutor.has_next %}
+                        $(document).ready(function() {
+                            $("#bottom-page-btn-3").html({{postsFindTutor.number}}+1)
+                        })
+                    {% endif %}
+                </script>
+
+                <li class="page-item">
+                    {% if postsFindTutor.number != pages %}
+                        <a class="page-link" href="?page={{pages}}" aria-label="Last">
+                            <span aria-hidden="true">... &raquo;</span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        </div>
+        <!-- Pagination -->
+        
+
+    </div>
+    <script>
+    //needlogintopost
+    $("#postpost-btn").click(function needlogin(){
+        $("#notifModalLabel").html("Need login")
+        $('#notificationmodal').modal('show')
+        $("#modal-footer-notif-login-button").show()
+    })
+    //On load
+    $(document).ready(function(){
+       //do somthing
+    });
+    
+    //save
+    function save(idpost){
+        title =  $("#title" + idpost).text()
+        main_content =  $("#main_content" + idpost).text()
+        subject =  $("#subject" + idpost).text()
+        calendar =  $("#calendar" + idpost).text()
+        salary =  $("#salary" + idpost).text()
+        contact =  $("#contact" + idpost).text()
+
+        let valid = true
+
+        if (title.length == 0){
+            valid = false
+            alert("Chủ đề không được trống")
+        }
+        if (title.length > 30){
+            valid = false
+            alert("Chủ đề không được quá 30 ký tự")
+        }
+
+        if (main_content.length == 0){
+            valid = false
+            alert("Chủ đề không được trống")
+        }
+        if (main_content.length > 200){
+            valid = false
+            alert("Nội dung không được quá 200 ký tự")
+        }
+
+        if (subject.length == 0){
+            valid = false
+            alert("Môn học không được trống")
+        }
+        if (subject.length > 30){
+            valid = false
+            alert("Môn học không được quá 30 ký tự")
+        }
+
+        if (calendar.length == 0){
+            valid = false
+            alert("Lương dự kiến không được trống")
+        }
+        if (calendar.length > 30){
+            valid = false
+            alert("Lương dự kiến không được quá 30 ký tự")
+        }
+
+        if (salary.length == 0){
+            valid = false
+            alert("Chi phí trả không được trống")
+        }
+        if (salary.length > 30){
+            valid = false
+            alert("Chi phí trả không được quá 30 ký tự")
+        }
+
+        if (contact.length == 0){
+            valid = false
+            alert("Địa chỉ không được trống")
+        }
+        if (contact.length > 100){
+            valid = false
+            alert("Địa chỉ không được quá 30 ký tự")
+        }
+
+        if (valid == true)
+        {
+            callupdatedatabase()
+        }
+        
+        function callupdatedatabase(){
+            $.ajax({
+            url: '{% url 'editpost' %}',
+            type: 'POST',
+            data: {id:idpost, title: title, main_content:main_content, subject:subject, calendar:calendar, salary:salary, contact:contact}
+            })
+            .done(function(response){
+                if (response['success'] == false){
+                    if (response['detail'] == "0"){
+                        alert("Not your own.")
+                    }
+                    else if (response['detail'] == "1"){
+                        $("#notifModalLabel").html("Need login")
+                        $('#notificationmodal').modal('show')
+                        $("#modal-footer-notif-login-button").show()
+                    }
+                    else{
+                        alert("Check input, cant save.")
+                    }
+                }
+                else if (response['success'] == true){
+                    console.log("updated")
+                    $("#save" + idpost).hide(500)
+
+                    $("#title" + idpost).attr('contenteditable','false')
+                    $("#title" + idpost).removeClass("border rounded-3")
+                    $("#title" + idpost).addClass("border-bottom border-2")
+                    $("#title" + idpost).css("background-color", "#ffffff")
+
+                    $("#main_content" + idpost).attr('contenteditable','false')
+                    $("#main_content" + idpost).removeClass("border border-2 rounded-3")
+                    $("#main_content" + idpost).css("background-color", "#ffffff")
+
+                    $("#subject" + idpost).attr('contenteditable','false')
+                    $("#subject" + idpost).removeClass("border border-2 rounded-3")
+                    $("#subject" + idpost).css("background-color", "#ffffff")
+
+                    $("#calendar" + idpost).attr('contenteditable','false')
+                    $("#calendar" + idpost).removeClass("border border-2 rounded-3")
+                    $("#calendar" + idpost).css("background-color", "#ffffff")
+
+                    $("#salary" + idpost).attr('contenteditable','false')
+                    $("#salary" + idpost).removeClass("border border-2 rounded-3")
+                    $("#salary" + idpost).css("background-color", "#ffffff")
+
+                    $("#contact" + idpost).attr('contenteditable','false')
+                    $("#contact" + idpost).removeClass("border border-2 rounded-3")
+                    $("#contact" + idpost).css("background-color", "#ffffff")
+                }
+            })
+            .fail(function(response){
+                alert("Lỗi request")
+            })
+        }
+    }
+
+    //editpost
+    function editpost(idpost) {
+        $("#save" + idpost).show(500)
+        
+        $("#title" + idpost).attr('contenteditable','true')
+        $("#title" + idpost).addClass("border rounded-3")
+        $("#title" + idpost).removeClass("border-bottom")
+        $("#title" + idpost).css("background-color", "#bfbfbf")
+
+        $("#main_content" + idpost).attr('contenteditable','true')
+        $("#main_content" + idpost).addClass("border border-2 rounded-3")
+        $("#main_content" + idpost).css("background-color", "#bfbfbf")
+
+        $("#subject" + idpost).attr('contenteditable','true')
+        $("#subject" + idpost).addClass("border border-2 rounded-3")
+        $("#subject" + idpost).css("background-color", "#bfbfbf")
+
+        $("#calendar" + idpost).attr('contenteditable','true')
+        $("#calendar" + idpost).addClass("border border-2 rounded-3")
+        $("#calendar" + idpost).css("background-color", "#bfbfbf")
+
+        $("#salary" + idpost).attr('contenteditable','true')
+        $("#salary" + idpost).addClass("border border-2 rounded-3")
+        $("#salary" + idpost).css("background-color", "#bfbfbf")
+
+        $("#contact" + idpost).attr('contenteditable','true')
+        $("#contact" + idpost).addClass("border border-2 rounded-3")
+        $("#contact" + idpost).css("background-color", "#bfbfbf")
+    }
+
+    //deletepost
+    function deletepost(idpost) {
+        console.log(idpost)
+        $.ajax({
+            url: '{% url 'deletepost' %}',
+            type: 'POST',
+            data: {id:idpost,}
+        })
+        .done(function(response){
+            if (response['success'] == false){
+                if (response['detail'] == "0"){
+                    alert("Cant take info of contact in server process.")
+                }
+                else if (response['detail'] == "1"){
+                    $("#notifModalLabel").html("Need login")
+                    $('#notificationmodal').modal('show')
+                    $("#modal-footer-notif-login-button").show()
+                }
+                else{
+                    alert("Your are not its own.")
+                }
+            }
+            else if (response['success'] == true){
+                if (response['detail'] == "deleted")
+                {
+                    location.reload()
+                    console.log("deleted")
+                }
+            }
+        })
+        .fail(function(response){
+            alert("Lỗi request")
+        })
+    }
+    //noticenable
+    $(".btn-notice").click(function(e){
+        $.ajax({
+            url: '{% url 'notice' %}',
+            type: 'POST',
+        })
+        .done(function(response){
+            if (response['success'] == false){
+                if (response['detail'] == "0"){
+                    alert("Cant take info of contact in server process.")
+                }
+                else if (response['detail'] == "1"){
+                    $("#notifModalLabel").html("Need login")
+                    $('#notificationmodal').modal('show')
+                    $("#modal-footer-notif-login-button").show()
+                }
+                else if (response['detail'] == "2"){
+                    $("#notifModalLabel").html("Let's confirm email {{user.email}}")
+                    $('#notificationmodal').modal('show')
+                    $("#modal-footer-notif-login-button").hide()
+                }
+            }
+            else if (response['success'] == true){
+                if (response['detail'] == "turnon")
+                {
+                    $("#btn-notice-id").css("background-color", "#737373")
+                    $("#btn-notice-id").html('<i class="fas fa-bell fa-spin" style="font-size:20px"></i> Tắt đi')
+                }
+                else if (response['detail'] == "turnoff")
+                {
+                    $("#btn-notice-id").css("background-color", "#ffcc00")
+                    $("#btn-notice-id").html('<i class="fas fa-bell fa-spin" style="font-size:20px"></i> Theo dõi')
+                }
+            }
+        })
+        .fail(function(response){
+            alert("Lỗi request")
+        })
+    })
+    //display image
+    $(".img-click-display").click(function(e){
+        var link = e.target.id
+        $("#displayimageBody").attr('src', link)
+    })
+    //Get user info
+    $(".link-display-user-info").click(function(e){
+        
+        var user_id = e.currentTarget.id
+        $.ajax({
+            url: '{% url 'showinfo' %}',
+            type: 'POST',
+            data:{id:user_id,}
+        })
+        .done(function(response){
+            if (response['success'] == 'False'){
+                if (response['detail'] == "0"){
+                    console.log("Cant take info of contact in server process.")
+                    $("#infoModalLabel").html("Không tìm thấy thông tin yêu cầu")
+                }
+                else{
+                    console.log("Need to logged to do this action.")
+                    $("#infoModalLabel").html("You need to Login.")
+                    $("#modal-footer-info-login-button").show()
+                }
+            }
+            else{
+                $("#modal-footer-info-login-button").hide()
+
+                $("#infoModalLabel").html("Info " + response['full_name'])
+
+                $("#school").html("Trường: " + response['school'])
+                $("#specialize").html("Chuyên môn: " + response['specialize'])
+                $("#yearofschool").html("Năm học: " + response['yearofschool'])
+                $("#sexs").html("Giới tính: " + response['sexs'])
+                $("#years_of_birth").html("Ngày sinh: " + response['years_of_birth'])
+                $("#more").html("Mô tả thêm: " + response['more'])
+
+                let date = response['last_login']
+                if (date != null){
+                    let nt_date = date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + ", " + date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3]
+                    $("#last_login").html("Lần Login cuối: " + nt_date )
+                }
+                else{
+                    $("#last_login").html("Lần Login cuối: " + date )
+                }
+                
+
+                if (response['school'] == null || response['school'] == '')
+                {
+                    $("#iconschool").css("color", "#cc0000")
+                }
+                else{
+                    $("#iconschool").css("color", "#10B33C")
+                }
+                
+                if (response['specialize'] == null || response['specialize'] == '')
+                {
+                    $("#iconspecialize").css("color", "#cc0000")
+                }
+                else{
+                    $("#iconspecialize").css("color", "#10B33C")
+                }
+
+                if (response['yearofschool'] == null || response['yearofschool'] == '')
+                {
+                    $("#iconyearofschool").css("color", "#cc0000")
+                }
+                else{
+                    $("#iconyearofschool").css("color", "#10B33C")
+                }
+
+                if (response['sexs'] == null || response['sexs'] == '')
+                {
+                    $("#iconsexs").css("color", "#cc0000")
+                }
+                else{
+                    $("#iconsexs").css("color", "#10B33C")
+                }
+
+                if (response['years_of_birth'] == null || response['years_of_birth'] == '')
+                {
+                    $("#iconyears_of_birth").css("color", "#cc0000")
+                }
+                else{
+                    $("#iconyears_of_birth").css("color", "#10B33C")
+                }
+
+                if (response['more'] == null || response['more'] == '')
+                {
+                    $("#iconmore").css("color", "#cc0000")
+                }
+                else{
+                    $("#iconmore").css("color", "#10B33C")
+                }
+
+                
+            }
+        })
+        .fail(function(response){
+            console.log("FAIL")
+        })
+    })
+    //Upload post
+    $(".btn-post-findtutor").click(function(){
+        $(".btn-post-findtutor").prop('disabled', true)
+        $(".btn-post-findtutor").html('<i class="fa fa-spinner fa-spin"></i>')
+        let title = $("#titleid").val()
+        let main_content = $("#main_contentid").val()
+        let subject = $("#subjectid").val()
+        let calendar = $("#calendarid").val()
+        let salary = $("#salaryid").val()
+        let contact = $("#contactid").val()
+        let date_outdate = $("#date_outdateid").val()
+        let post_img1 = $("#post_img1id").val()
+        let post_img2 = $("#post_img2id").val()
+        let post_img3 = $("#post_img3id").val()
+
+        var f_obj1 = $("#post_img1id")[0].files[0]
+        var f_obj2 = $("#post_img2id")[0].files[0]
+        var f_obj3 = $("#post_img3id")[0].files[0]
+        var data = new FormData()
+        data.append("img1",f_obj1)   
+        data.append("img2",f_obj2)   
+        data.append("img3",f_obj3)   
+
+        var valid = true
+
+        if (title == ''){
+            alert('Tiêu đề không được trống.')
+            valid = false
+        }
+        if (main_content == ''){
+            alert('Nội dung không được trống.')
+            valid = false
+        }
+        if (subject == ''){
+            alert('Môn học không được trống.')
+            valid = false
+        }
+        if (calendar == ''){
+            alert('Lịch học không được trống.')
+            valid = false
+        }
+        if (salary == ''){
+            alert('Chi trả dự tính không được trống.')
+            valid = false
+        }
+        if (contact == ''){
+            alert('Thông tin liên hệ không được trống.')
+            valid = false
+        }
+        if (contact == ''){
+            alert('Thông tin liên hệ không được trống.')
+            valid = false
+        }
+        if (date_outdate == ''){
+            alert('Ngày hết hạn không được trống.')
+            valid = false
+        }
+
+        if (post_img1){
+            if ($('#post_img1id')[0].files[0].size > 3072000){
+                alert('File 1 too large')
+                valid = false
+            }
+        }
+        if (post_img2){
+            if ($('#post_img2id')[0].files[0].size > 3072000){
+                alert('File 2 too large')
+                valid = false
+            }
+        }
+        if (post_img3){
+            if ($('#post_img3id')[0].files[0].size > 3072000){
+                alert('File 3 too large')
+                valid = false
+            }
+        }
+        
+
+        if (valid == true)
+        {
+            data.append('title',title)
+            data.append('main_content',main_content)
+            data.append('subject',subject)
+            data.append('calendar',calendar)
+            data.append('salary',salary)
+            data.append('contact',contact)
+            data.append('date_outdate',date_outdate)
+            $.ajax({
+                url: '{% url 'getpostpost' %}',
+                type: 'POST',
+                processData:false,
+                contentType:false,
+                data:data
+            })
+            .done(function(response){
+                if (response['success'] == false){
+                    alert(response['detail'])
+                }
+                else{
+                    console.log("SAVED")
+                    location.reload()
+                }
+                $(".btn-post-findtutor").prop('disabled', false)
+                $(".btn-post-findtutor").html('Post')
+            })
+            .fail(function(response){
+                alert('Lỗi truyền tải')
+                $(".btn-post-findtutor").prop('disabled', false)
+                $(".btn-post-findtutor").html('Post')
+            })
+        }
+        else{
+            $(".btn-post-findtutor").prop('disabled', false)
+            $(".btn-post-findtutor").html('Post')
+        }
+    })
+    </script>
+    
+{% endblock content %}
+
+

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <script src="https://www.google.com/recaptcha/api.js?hl=ru"></script>
+    {% if not user.is_authenticated %}
+    <div class="container border border-2 col-2 flex-column justify-content-center" style="min-width: 400px;margin-top:100px; background-color:#edf0f2;">
+
+            {% if next %}
+                {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+                {% else %}
+                <p>Please login to see this page.</p>
+                {% endif %}
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{form.as_p}}
+            <p class="d-flex justify-content-start">
+                <button type="submit" class="btn mt-4" style="background-color:#00b33c;color:#ffffff;">Login</button>
+            </p>
+            <input type="hidden" name="next" value="{{ next }}">
+            </form>
+
+            {# Assumes you setup the password_reset view in your URLconf #}
+            <p class="mt-3 d-flex justify-content-end"><a style="color:rgb(77, 77, 77);" href="{% url 'password_reset' %}"><small>Forgot password?</small></a></p>
+            <p class="mt-3 d-flex justify-content-end"><a style="color:rgb(77, 77, 77);" href="{% url 'register' %}"> <small>Register?</small> </a></p>
+    </div>
+    {% else %}
+        <div class="container col-4 d-flex justify-content-center" style="min-width: 400px;margin-top:70px">
+            <h4 class="mt-5">Already logined.</h4>
+        </div>
+    {% endif %}
+{% endblock %}
