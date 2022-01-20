@@ -1,5 +1,6 @@
-### ab -c 10 -n 1000 http://127.0.0.1/api/v1/marketPost  
-## With balance  
+## Command:
+    ab -c 10 -n 1000 http://127.0.0.1/api/v1/marketPost  
+*With nginx balance*  
     This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
