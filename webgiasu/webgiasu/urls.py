@@ -36,15 +36,21 @@ from myapi.views import marketpostViewSet
 
 from django.conf.urls import url
 from vote.views import VoteListView
+from myapi.views import marketpostViewSet
+
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
+
 
 urlpatterns = [
 
-    path('adminthanhthiencontrol/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', views_basic.home_view, name='home'),
-    #path('', include('market.urls')),
+    path('api/v1/', include('myapi.urls')),
+    url('token-generator/', obtain_jwt_token),
+    url('token-refresh/', refresh_jwt_token),
     path('about/', views_basic.about, name='about'),
    
-    #path('accounts/', include('django.contrib.auth.urls')),
+
     path('login/', profiles_views.SiteLoginView.as_view(extra_context={'nav': 'login'}), name='login'),
     path('register/', profiles_views.SiteRegisterView.as_view(extra_context={'nav': 'register'}), name='register'),
     path('register/ok/', profiles_views.SiteRegisterOk.as_view(), name='register_ok'),
@@ -109,9 +115,6 @@ urlpatterns = [
     path('homework_editpost/', views_homework.edit_post, name='homework_editpost'),
     path('homework_notice/', views_homework.notice, name='homework_notice'),
 
-    #For web subject
-    #API
-    path('api-auth/', include('rest_framework.urls'))
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

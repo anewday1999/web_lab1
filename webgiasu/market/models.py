@@ -21,7 +21,7 @@ class marketpost(models.Model):
     price = models.CharField(max_length=30, blank=False)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_outdate = models.PositiveSmallIntegerField(blank=False, default=15)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     report = models.ManyToManyField(User, default=None, blank=True, related_name='marketreport_set')
     post_img1 = models.ImageField(_("Ảnh 1:"), upload_to='postImg/market/', null=True, blank=True)
     post_img2 = models.ImageField(_("Ảnh 2:"), upload_to='postImg/market/', null=True, blank=True)
