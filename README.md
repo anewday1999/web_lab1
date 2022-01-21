@@ -1,9 +1,16 @@
-### Цель работы:  
-Cоциальная сеть для торговли и поиска работы. 
-### Предоставляемая возможность:
-Просмотр постов, публикация статей. Войти, сбросить пароль. 
+### Weblab1
 ### Краткий перечень функциональных требований:  
-Пользователи загружают собственные статьи, редактируют их. Просмотр сообщений других людей, просмотр информации автора. 
++ Регистрация  
++ Авторизация  
++ Get list market's post
++ Get list find tutor post
++ Get list find employee post
++ Up a post in market
++ Up a post in find tutor
++ Up a post in find employee
++ Update info in market
++ Update info in find tutor
++ Update info in find employee
 ### Run:  
 ### 1.  
 Check PATH in ==nginx.conf.template== in the very firstime.  
@@ -18,18 +25,6 @@ Check PATH in ==nginx.conf.template== in the very firstime.
     sh ./run_server.sh  
 ### 4. For unbind().
     sudo killall nginx  
-### 5. Краткий перечень функциональных требований:  
-+ Регистрация  
-+ Авторизация  
-+ Get list market's post
-+ Get list find tutor post
-+ Get list find employee post
-+ Up a post in market
-+ Up a post in find tutor
-+ Up a post in find employee
-+ Update info in market
-+ Update info in find tutor
-+ Update info in find employee
 ### Swagger:  
 [SwaggerCode](https://app.swaggerhub.com/apis/ttbauman/SocialNetwork/v1)
 ### Schemas
