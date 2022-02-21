@@ -34,6 +34,6 @@ Check PATH in ==nginx.conf.template== in the very firstime.
 ![](https://github.com/anewday1999/web_lab1/blob/main/pictures/271754414_442511257423432_4071665780707693716_n%20(1).png "Data structure")
 ### Weblab2  
 ### 1  
-[moodboardPrintest]([https://www.pinterest.ru/anewday1999/wgs/)
+[moodboardPrintest](https://www.pinterest.ru/anewday1999/wgs/)
 ### 2
 [Figma](https://www.figma.com/file/OKsUT7yxeimPKHQRQP2J64/WSP?node-id=0%3A1)
