@@ -28,6 +28,8 @@ Check PATH in ==nginx.conf.template== in the very firstime.
 ### Swagger:  
 [SwaggerCode](https://app.swaggerhub.com/apis/ttbauman/SocialNetwork/v1)
 ### Schemas
+
+![](https://github.com/anewday1999/web_lab_project/blob/main/pictures/usecase.png)
 ![](https://github.com/anewday1999/web_lab1/blob/main/pictures/271945594_445223547057446_3338745181557684151_n.png "pic2")
 ![](https://github.com/anewday1999/web_lab1/blob/main/pictures/271754414_442511257423432_4071665780707693716_n%20(1).png "Data structure")
 ### Weblab2  
