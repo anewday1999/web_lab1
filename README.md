@@ -35,5 +35,7 @@ Check PATH in ==nginx.conf.template== in the very firstime.
 ### Weblab2  
 ### 1  
 [moodboardPrintest](https://www.pinterest.ru/anewday1999/wgs/)
+![](https://github.com/anewday1999/web_lab_project/blob/main/Screenshot%202022-02-22%20at%2020.47.23.png)
 ### 2
 [Figma](https://www.figma.com/file/OKsUT7yxeimPKHQRQP2J64/WSP?node-id=0%3A1)
+![](https://github.com/anewday1999/web_lab_project/blob/main/Screenshot%202022-02-22%20at%2020.48.12.png)
