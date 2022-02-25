@@ -44,5 +44,6 @@ Check PATH in ==nginx.conf.template== in the very firstime.
 
 ### Weblab3. 
 
-Mobile app. 
-![](https://github.com/anewday1999/web_lab_project/blob/main/pictures/input.png)
+Mobile app.  
+
+![](https://github.com/anewday1999/web_lab_project/blob/main/pictures/input.png)  
